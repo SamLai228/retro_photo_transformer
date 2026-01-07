@@ -101,25 +101,66 @@ GEMINI_API_KEY = "your_api_key_here"
 
 ## 疑難排解
 
-### 部署失敗
+### 錯誤：Oh no. Error running app
 
-1. **檢查 requirements.txt**
-   - 確保所有依賴套件都正確列出
-   - 檢查版本號是否相容
+**重要：首先查看詳細錯誤訊息**
 
-2. **檢查日誌**
-   - 在 Streamlit Cloud 應用程式頁面查看日誌
-   - 尋找錯誤訊息
+1. 在 Streamlit Cloud 應用程式頁面：
+   - 點擊應用程式
+   - 點擊右上角 **"⋮"** (三個點)
+   - 選擇 **"View app logs"**
+   - 查看完整的錯誤堆疊追蹤
 
-3. **常見錯誤**
-   - 缺少依賴套件：更新 `requirements.txt`
-   - 檔案路徑錯誤：確認主檔案路徑正確
-   - Python 版本問題：Streamlit Cloud 使用 Python 3.9
+### 常見問題和解決方案
 
-### 應用程式無法載入
+#### 問題 1: 模組導入錯誤
 
-- 檢查 `streamlit_app.py` 是否有語法錯誤
-- 確認所有 import 的模組都在 `requirements.txt` 中
+**錯誤訊息：** `ModuleNotFoundError: No module named 'retro_transformer'`
+
+**解決方案：**
+- 確保 `retro_transformer.py` 和 `streamlit_app.py` 在同一個目錄
+- 確認兩個檔案都已推送到 GitHub
+
+#### 問題 2: 依賴套件版本問題
+
+**錯誤訊息：** `ImportError` 或 `VersionConflict`
+
+**解決方案：**
+- 已更新 `requirements.txt` 指定版本號
+- 確保所有依賴都正確列出
+
+#### 問題 3: Python 版本不相容
+
+**解決方案：**
+Streamlit Cloud 預設使用 Python 3.9。如果遇到版本問題，可以在專案根目錄建立 `runtime.txt`：
+```
+python-3.9.18
+```
+
+#### 問題 4: 檔案路徑錯誤
+
+**解決方案：**
+- 確保所有路徑使用相對路徑
+- 不要使用絕對路徑或 `~` 路徑
+
+#### 問題 5: 語法錯誤
+
+**解決方案：**
+在本地測試：
+```bash
+streamlit run streamlit_app.py
+```
+
+### 部署失敗檢查清單
+
+- [ ] `requirements.txt` 包含所有依賴套件
+- [ ] 所有 Python 檔案沒有語法錯誤
+- [ ] `streamlit_app.py` 是主檔案
+- [ ] 所有導入的模組都存在
+- [ ] 沒有使用絕對路徑
+- [ ] 已查看 Streamlit Cloud 的詳細日誌
+
+詳細的疑難排解指南請參考 [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 
 ## 資源限制
 

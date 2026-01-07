@@ -1,6 +1,6 @@
 # 復古照片轉換應用程式依賴套件
-google-genai
-python-dotenv
-streamlit
-Pillow
+google-genai>=1.0.0
+python-dotenv>=1.0.0
+streamlit>=1.28.0
+Pillow>=10.0.0
 
