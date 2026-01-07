@@ -1,12 +1,11 @@
 [server]
-port = 8502
-headless = false
+# Streamlit Cloud 會自動設定端口和 headless 模式
+# 不需要在這裡設定
 enableCORS = false
 enableXsrfProtection = true
 
 [browser]
 gatherUsageStats = false
-serverAddress = "localhost"
 
 [theme]
 primaryColor = "#6B4423"
