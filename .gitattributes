@@ -1,0 +1,4 @@
+# 確保 .env 檔案不會被意外提交
+.env filter=git-crypt diff=git-crypt
+.env.local filter=git-crypt diff=git-crypt
+*.key filter=git-crypt diff=git-crypt

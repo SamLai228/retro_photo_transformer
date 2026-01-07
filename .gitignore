@@ -1,0 +1,93 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虛擬環境
+venv/
+env/
+ENV/
+.venv
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+
+# 環境變數和敏感資訊
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+*.pfx
+*_key.txt
+*_api_key.txt
+*secret*
+*credentials*
+config.ini
+secrets.yaml
+secrets.yml
+
+# Streamlit
+.streamlit/secrets.toml
+
+# 專案特定 - 輸出檔案和臨時檔案
+output/
+temp/
+tmp/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+*.heic
+
+# 日誌檔案
+*.log
+logs/
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 測試覆蓋率
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+

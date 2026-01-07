@@ -1,0 +1,6 @@
+# 復古照片轉換應用程式依賴套件
+google-genai
+python-dotenv
+streamlit
+Pillow
+

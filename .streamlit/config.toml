@@ -1,0 +1,17 @@
+[server]
+port = 8502
+headless = false
+enableCORS = false
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false
+serverAddress = "localhost"
+
+[theme]
+primaryColor = "#6B4423"
+backgroundColor = "#F5E6D3"
+secondaryBackgroundColor = "#E8D5B7"
+textColor = "#5A3A1F"
+font = "serif"
+
