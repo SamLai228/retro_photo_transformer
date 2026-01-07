@@ -91,3 +91,7 @@ htmlcov/
 # pyenv
 .python-version
 
+# GitHub 設定文件（不需要上傳）
+GITHUB_SETUP.md
+GITHUB_QUICK_START.md
+

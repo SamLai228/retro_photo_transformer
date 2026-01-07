@@ -186,6 +186,29 @@ def main():
     with st.sidebar:
         st.header("⚙️ 設定")
         
+        # API Key 設定
+        st.subheader("🔑 API Key 設定")
+        st.markdown("請輸入您的 Key")
+        
+        api_key_input = st.text_input(
+            "Key",
+            value=os.environ.get("GEMINI_API_KEY", ""),
+            type="password",
+            help="請輸入您的 API Key。如果已在 .env 檔案中設定，會自動載入。",
+            key="api_key_input"
+        )
+        
+        # 如果使用者輸入了 API Key，更新環境變數
+        if api_key_input:
+            os.environ["GEMINI_API_KEY"] = api_key_input
+            st.success("✅ API Key 已設定")
+        elif os.environ.get("GEMINI_API_KEY"):
+            st.info("ℹ️ 使用 .env 檔案中的 API Key")
+        else:
+            st.warning("⚠️ 請輸入 API Key 才能使用轉換功能")
+        
+        st.divider()
+        
         # 風格說明
         st.subheader("🎨 轉換風格")
         st.info("""
@@ -210,12 +233,14 @@ def main():
         # 使用說明
         st.subheader("📖 使用說明")
         st.markdown("""
-        1. 上傳一張照片
-        2. 點擊「開始轉換」按鈕
-        3. 等待處理完成
-        4. 下載轉換後的 1980 年代復古照片
+        1. 在「🔑 API Key 設定」中輸入您的 Key
+        2. 上傳一張照片
+        3. 點擊「開始轉換」按鈕
+        4. 等待處理完成
+        5. 下載轉換後的 1980 年代復古照片
         
         **注意事項：**
+        - 需要有效的 API Key
         - 照片中的人物將保持原樣
         - 服裝會自動轉換為 1980 年代風格
         - 會自動添加復古配件（如卡帶播放器、復古相機等）
@@ -249,8 +274,10 @@ def main():
             # 轉換按鈕
             if st.button("🚀 開始轉換", type="primary", use_container_width=True):
                 # 檢查 API Key
-                if not os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY") == "your_api_key_here":
-                    st.error("❌ 請先設定 Google Gemini API Key！")
+                api_key = os.environ.get("GEMINI_API_KEY", "")
+                if not api_key or api_key == "your_api_key_here" or api_key.strip() == "":
+                    st.error("❌ 請先在側邊欄輸入 Key！")
+                    st.info("💡 請在左側側邊欄的「🔑 API Key 設定」中輸入您的 Key")
                     st.stop()
                 
                 # 儲存上傳的檔案到臨時目錄
