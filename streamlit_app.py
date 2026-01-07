@@ -13,6 +13,10 @@ from dotenv import load_dotenv
 # 載入環境變數
 load_dotenv()
 
+# 初始化 session state
+if 'api_key' not in st.session_state:
+    st.session_state.api_key = ""
+
 # 設定頁面配置
 st.set_page_config(
     page_title="復古照片轉換器",
@@ -190,22 +194,42 @@ def main():
         st.subheader("🔑 API Key 設定")
         st.markdown("請輸入您的 Key")
         
+        # 從 .env 載入預設值（僅在第一次載入時）
+        default_key = os.environ.get("GEMINI_API_KEY", "")
+        
+        # 使用 session state 管理 API Key
         api_key_input = st.text_input(
             "Key",
-            value=os.environ.get("GEMINI_API_KEY", ""),
+            value=st.session_state.api_key if st.session_state.api_key else default_key,
             type="password",
-            help="請輸入您的 API Key。如果已在 .env 檔案中設定，會自動載入。",
+            help="請輸入您的 API Key。刷新頁面後需要重新輸入。",
             key="api_key_input"
         )
         
-        # 如果使用者輸入了 API Key，更新環境變數
+        # 更新 session state
         if api_key_input:
+            st.session_state.api_key = api_key_input
             os.environ["GEMINI_API_KEY"] = api_key_input
             st.success("✅ API Key 已設定")
-        elif os.environ.get("GEMINI_API_KEY"):
+        elif default_key and not st.session_state.api_key:
+            # 如果有 .env 中的 Key 且 session state 為空，使用它
+            st.session_state.api_key = default_key
+            os.environ["GEMINI_API_KEY"] = default_key
             st.info("ℹ️ 使用 .env 檔案中的 API Key")
-        else:
+        elif not api_key_input:
+            # 清除 session state
+            st.session_state.api_key = ""
+            if os.environ.get("GEMINI_API_KEY"):
+                del os.environ["GEMINI_API_KEY"]
             st.warning("⚠️ 請輸入 API Key 才能使用轉換功能")
+        
+        # 清除按鈕
+        if st.session_state.api_key:
+            if st.button("🗑️ 清除 Key", use_container_width=True):
+                st.session_state.api_key = ""
+                if "GEMINI_API_KEY" in os.environ:
+                    del os.environ["GEMINI_API_KEY"]
+                st.rerun()
         
         st.divider()
         
@@ -273,12 +297,14 @@ def main():
         if uploaded_file is not None:
             # 轉換按鈕
             if st.button("🚀 開始轉換", type="primary", use_container_width=True):
-                # 檢查 API Key
-                api_key = os.environ.get("GEMINI_API_KEY", "")
+                # 檢查 API Key（優先使用 session state）
+                api_key = st.session_state.get("api_key", "") or os.environ.get("GEMINI_API_KEY", "")
                 if not api_key or api_key == "your_api_key_here" or api_key.strip() == "":
                     st.error("❌ 請先在側邊欄輸入 Key！")
                     st.info("💡 請在左側側邊欄的「🔑 API Key 設定」中輸入您的 Key")
                     st.stop()
+                # 確保環境變數已設定
+                os.environ["GEMINI_API_KEY"] = api_key
                 
                 # 儲存上傳的檔案到臨時目錄
                 with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
