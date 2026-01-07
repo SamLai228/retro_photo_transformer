@@ -162,6 +162,21 @@ retro_photo_transformer/
 - 圖片格式支援（JPG, PNG, GIF, WebP）
 - 檔案權限正確
 
+## 線上部署
+
+本應用程式已部署到 Streamlit Cloud，您可以透過以下方式使用：
+
+### 🌐 線上版本
+
+訪問部署的應用程式（如果已部署）：
+```
+https://your-app-name.streamlit.app
+```
+
+### 📦 本地部署
+
+詳細的部署指南請參考 [DEPLOY.md](DEPLOY.md)
+
 ## 授權
 
 本專案採用 MIT 授權，詳見 [LICENSE](LICENSE) 檔案。
